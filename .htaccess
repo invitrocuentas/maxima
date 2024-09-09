@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Redirigir de /mi-cuenta/ a /mi-cuenta/edit-account/ solo si es exactamente /mi-cuenta/
+RewriteCond %{REQUEST_URI} ^/mi-cuenta/?$ [NC]
+RewriteRule ^mi-cuenta/?$ /mi-cuenta/edit-account/ [R=301,L]
+# Configuración existente
+RewriteBase /maxima/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /maxima/index.php [L]
+</IfModule>
+# BEGIN WordPress
+# Las directivas (líneas) entre «BEGIN WordPress» y «END WordPress» son
+# generadas dinámicamente y solo deberían ser modificadas mediante filtros de WordPress.
+# Cualquier cambio en las directivas que hay entre esos marcadores serán sobrescritas.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /maxima/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /maxima/index.php [L]
+</IfModule>
+
+# END WordPress
