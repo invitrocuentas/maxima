@@ -77,6 +77,25 @@ do_action('woocommerce_email_before_order_table', $order, $sent_to_admin, $plain
                     }
                 }
 
+                if (have_rows('listado_de_etiquetas', 'option')) {
+                    while (have_rows('listado_de_etiquetas', 'option')) {
+                        the_row();
+
+                        $nombre_etiqueta = get_sub_field('nombre_etiqueta', 'option');
+                        $productos = get_sub_field('productos', 'option');
+
+                        if ($productos) {
+                            if (is_array($productos) && isset($productos[0]->ID)) {
+                                if (in_array($product_id, wp_list_pluck($productos, 'ID'))) {
+                                    echo '<div class="product-tag">' . '<p>' . 'Descuento: ' . esc_html($nombre_etiqueta) . '</p>' . '</div>';
+                                }
+                            } elseif (in_array($product_id, $productos)) {
+                                echo '<div class="product-tag">' . '<p>' . 'Descuento: ' . esc_html($nombre_etiqueta) . '</p>' . '</div>';
+                            }
+                        }
+                    }
+                }
+
                 echo '</td>';
 
                 echo '<td class="woocommerce-table__product-quantity product-quantity">' . esc_html($qty_display) . '</td>';
